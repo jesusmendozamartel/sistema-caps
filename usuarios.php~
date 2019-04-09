@@ -1,0 +1,101 @@
+<? include("cabecera.php"); 
+    include("funciones.php");
+    $numeropagina = 50;
+    $pagina = $_REQUEST["pagina"];
+    if($pagina=="")
+       $pagina = 1;    
+?>
+
+<head>
+  <style>
+   td.estilo
+    {
+       
+       background-color:#e8c6c6; 
+       width:20px;
+       border: 1px solid black;
+       text-align: center;
+       text-decoration:underline;
+       
+
+    }
+   td.estiloseleccionado
+    {
+       color: #ffffff;
+       width:20px;
+       background-color:#770a0a;
+       border: 1px solid black;
+       text-align: center;
+       
+     }
+    
+   a:link {text-decoration:underline}
+a:visited {text-decoration:underline}
+a:hover{text-decoration:underline}
+a:active{text-decoration:underline}
+  </style> 
+</head>
+<div class="div1">
+<div class="contenido">
+  
+ <div align="right"><b>M&oacute;dulo de Usuarios</b></div>
+ <hr>
+  <div align="left">
+  <table ><tr><td>
+  <a href="datosusuarios.php?accion=nuevo"><img border='0' src='imagenes/add_paciente.png' width="80"></a> </td><td width="20"></td>
+  <td><form name="busquedapaciente" action='usuarios.php' method="post"><font size='2'>Buscar :</font>  <input name="paciente" value="<? echo $_POST["paciente"]; ?>"> <input name="buscar" value="buscar" type="submit"></form>
+   </td></tr>  
+  </table>
+  </div>
+  
+  <hr>    
+ 
+  <? 
+
+    $criterio = $_POST["paciente"]; 
+
+   $nivel = $_COOKIE["nivel"];
+   $idsession =  $_COOKIE["idsession"];
+
+    if($nivel=="1")
+    {    $cadena ="SELECT * FROM usuario where eliminado = '0' and (nombre like '$criterio%' or apellidos like '$criterio%' or nrodocumento like '$criterio%' or hc like '$criterio%')" ;
+    }else
+          {
+             $cadena ="SELECT * FROM usuario where idsession ='$idsession' and  eliminado = '0' and (nombre like '$criterio%' or apellidos like '$criterio%' or nrodocumento like '$criterio%' or hc like '$criterio%') ";
+
+            }
+
+       $numerototal = calculorows($cadena);   
+       dibuja_paginacion("usuarios.php","paciente=".$_POST["paciente"], $numerototal, $numeropagina,$pagina);
+   ?>
+  <table width="100%">
+  <?php cabecera();
+        echo "<div id='Layer1' style=' height:450px; overflow: scroll;'>"; 
+       cargar_usuarios($_POST["paciente"],$pagina,$numeropagina);
+       echo "</div>";
+  
+      ?>
+       
+   </table>
+  
+ 
+</div>
+</div>
+
+<? include("pie.php");
+
+function cabecera()
+{
+   echo "<tr bgcolor='#440707'>";
+   echo "<td><font color='#ffffff' size='2'><b>Id</td>";
+   echo "<td><font color='#ffffff' size='2'><b>HC</td>";
+   echo "<td><font color='#ffffff' size='2'><b>Nombre/Apellidos</td>";
+   echo "<td><font color='#ffffff' size='2'><b>Departamento</td>";
+   echo "<td><font color='#ffffff' size='2'><b>Session</td>";
+   echo "<td><font color='#ffffff' size='2'><b>Modificado</td>";
+   echo "<td><font color='#ffffff' size='2'><b>Opciones</td>";
+   echo "</tr>";
+   
+}
+
+?>

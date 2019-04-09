@@ -1,0 +1,104 @@
+<?php
+
+   include("cabecera.php"); 
+   ?>
+   <head>
+   <style>
+     .div1{
+	   height: 1500px;
+	 }
+	 .contenido
+	  {
+	  height: 1500px;
+	  
+	  }
+   </style>
+   </head>
+   <?
+   include("funciones.php");
+   $idencuesta = 1;
+   $tipousuario = $_POST["tipousuario"];
+   
+   if($_POST["grabar"])
+   {
+       $conexion = conectar_base(); 
+       mysql_select_db ("sistemaatencion",$conexion);
+       $cadena ="select * from encuesta join pregunta on encuesta.idencuesta = pregunta.idencuesta where encuesta.idencuesta = $idencuesta";
+	   $tabla = mysql_query($cadena, $conexion);   
+           $numero = mysql_num_rows($tabla);
+	   mysql_free_result($tabla);
+	   mysql_close($conexion);
+	   for ( $i = 0 ; $i < $numero ; $i ++)
+           {  
+	      grabando_respuestas($_POST["entrada".$i],$_REQUEST['idatencion'], $_POST["indice".$i],$idencuesta);
+	   
+           }
+		bloqueando_atencion($_REQUEST['idatencion'],$idencuesta);
+		 ?> 
+<!--	     <head>         
+ 		 <META HTTP-EQUIV="Refresh" CONTENT="0; URL=manager_encuesta.php?idatencion=<?php echo  $_REQUEST['idatencion']; ?>&iduser=<?php echo  $_REQUEST['iduser']; ?>"> 
+            </head>  -->
+         <?
+   }
+   
+ ?>
+
+
+<div class="div1">
+<div class="contenido"> 
+   
+ <?php 
+   
+   
+   $textencuesta = retorna_cadena($idencuesta,"idencuesta",1,"encuesta");
+   echo "<h2>Id Encuesta: ".$idencuesta." - ".$textencuesta."</h2>";   
+   echo "<h2><b>Atenci&oacute;n:</b> ";
+   $natencion = retorna_cadena($_REQUEST["idatencion"],"idatencion",1,"atencion");
+   echo $natencion."</h2>";
+
+   cargar_preguntas($_REQUEST["idatencion"],$_REQUEST["iduser"],$idencuesta,$_REQUEST["tipousuario"]);
+
+?>
+   
+
+</div>
+</div>
+
+<? include("pie.php");  
+
+function grabando_respuestas($entrada,$idatencion,$idrespuesta,$idencuesta)
+{
+       $conexion = conectar_base(); 
+       mysql_select_db ("sistemaatencion",$conexion);
+       $cadena ="select * from respuestaencuesta where idatencion = '$idatencion' and idpregunta='$idrespuesta'";
+	  
+       $tabla = mysql_query($cadena, $conexion);   
+       $numero = mysql_num_rows($tabla);
+       $fecha = date("d-m-Y H:i:s");
+       if($numero==0)
+       {
+	      $cadena = "insert into respuestaencuesta 	(idopcion,opentrada,idatencion,idpregunta,fechacreacion,fechamodificacion,idencuesta) values ('','$entrada','$idatencion','$idrespuesta','$fecha','$fecha','$idencuesta')";
+             //echo $cadena;
+	   }else
+	      {
+		    $cadena = "update respuestaencuesta set opentrada='$entrada',fechamodificacion='$fecha' where idatencion='$idatencion' and idpregunta='$idrespuesta'";
+		  
+ echo $cadena;
+		  }
+        mysql_query($cadena,$conexion);
+	mysql_free_result($tabla);
+	mysql_close($conexion);
+		
+}
+function bloqueando_atencion($idatencion,$idencuesta)
+{
+    $conexion = conectar_base(); 
+    mysql_select_db ("sistemaatencion",$conexion);
+    $cadena ="update atencion set bloqueado='1',idencuesta='$idencuesta' where idatencion='$idatencion'";
+	echo $cadena;
+	mysql_query($cadena,$conexion);
+	mysql_close($conexion);
+	  
+
+}
+?>

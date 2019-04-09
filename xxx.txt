@@ -1,0 +1,11 @@
+Opcion entrada
+y Saluda
+
+Condición del Usuario: Violencia Familiar
+                                 Sexual
+                                 Social
+                       Maltrato Psicolocico
+                       Refugiado					   
+
+Consentimiento Informa y documentarlo.
+

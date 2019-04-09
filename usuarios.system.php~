@@ -1,0 +1,175 @@
+<? include("cabecera.php"); 
+    include("funciones.php");
+	
+
+if($_POST["grabar"])
+{ 
+  $usuario = $_POST["usuario"];
+  $clave = $_POST["clave"];
+  $dni = $_POST["dni"];
+  $nivel = $_POST["nivel"];
+  if($usuario=="")
+   { $usuario = retorna_cadena($_REQUEST["iduser"],"id",1,"usersession");
+     $user=1;
+    }
+  if($usuario<>"" and  $_POST["clave"])
+  {
+     if($_REQUEST["op"]=="nuevo")
+	 {
+	   
+	   $busca_usuario = buscasesionuser($usuario);
+	   if($busca_usuario==0 &&  $clave<>"")
+	   {
+	     $cadena = "insert into usersession (id,usuario,clave,dni,nivel) values ('','$usuario','$clave','$dni','$nivel')";
+		 
+	    $conexion = conectar_base();
+		echo $cadena;
+        mysql_select_db ("sistemaatencion",$conexion);
+		mysql_query($cadena,$conexion);
+        mysql_close($conexion);  
+		$error = 0;
+	   }else
+	     {
+		   $error = 1;
+		 }
+		 if($error==0)
+		 {
+		   ?>
+		
+		  <head>        
+ 		   <META HTTP-EQUIV="Refresh" CONTENT="0; URL=sessiones.php">  
+          </head> 
+	
+		<?		
+		 
+		 
+		 }
+	   
+	 }else
+	   {
+		 //echo "Viejo"; 
+		 //$busca_usuario = buscasesionuser($usuario);
+		 if($clave<>"")
+	      {
+	        $iduser =  $_REQUEST['iduser'];
+			$cadena = "update usersession set clave='$clave',dni='$dni',nivel='$nivel' where id=$iduser";
+			$conexion = conectar_base();
+			//echo $cadena;
+			mysql_select_db ("sistemaatencion",$conexion);
+			mysql_query($cadena,$conexion);
+			mysql_close($conexion);  
+			$error = 0;
+			
+			
+	      }else
+               {
+			     $error = 1;
+			     
+			   }	
+
+           if($error==0)
+		 {
+		   ?>
+		
+		  <head>        
+ 		   <META HTTP-EQUIV="Refresh" CONTENT="0; URL=sessiones.php">  
+          </head> 
+	
+		<?		
+		 
+		 
+		 }
+			   
+		}
+		
+  
+  }
+
+}else
+  {
+  
+  if($_REQUEST["op"]=="editar")
+  {
+      $usuario = retorna_cadena($_REQUEST["iduser"],"id",1,"usersession");
+      $clave = retorna_cadena($_REQUEST["iduser"],"id",2,"usersession");
+      $dni = retorna_cadena($_REQUEST["iduser"],"id",3,"usersession");
+      $nivel = retorna_cadena($_REQUEST["iduser"],"id",4,"usersession");
+      $user=1;
+  }
+  
+  }	
+	
+?>
+
+<div class="div1">
+<div class="contenido">
+  
+  <br>
+  <div align="right"><b>USUARIOS DEL SISTEMA</b></div>
+  <br>
+  <a href="usuarios.system.php">[+] Agregar Usuario </a>
+  
+<hr>  
+<table align='center'><tr><td>
+<table bgcolor="#ffffff" align='center' border='0'>
+<tr bgcolor="#c1a404"><td colspan="3"><a href="sessiones.php"><img src="imagenes/cerrar.jpg" border="1"></a> </td></tr>
+<? if($_REQUEST["op"]=="nuevo"){ ?>
+<form name='nuevaopcion' method='post' action='usuarios.system.php?&op=<?php echo $_REQUEST["op"]; ?>'>
+<? }else { ?>
+    <?php echo $_REQUEST["opcion"]; ?>
+   <form name='nuevaopcion' method='post' action='usuarios.system.php?&op=<?php echo $_REQUEST["op"]; ?>&iduser=<?php echo $_REQUEST["iduser"];?>'>
+<? }?>
+
+
+<tr ><td >
+<b>Usuario</b>
+</td><td>:</td><td><input name='usuario' value="<? echo $usuario; ?>" <? if($user==1){ echo "disabled";} ?>></td></tr>
+<tr><td>
+<b>Clave
+</td><td>:</td><td><input name='clave' type='password' value="<? echo $clave; ?>"></td></tr>
+<tr ><td >
+<b>DNI
+</td><td>:</td><td><input name='dni' value="<? echo $dni; ?>"></td></tr>
+<tr ><td >
+<b>Nivel
+</td><td>:</td><td>
+<select name='nivel'>
+  <option value="1" <? if($nivel==1){ echo "selected"; } ?> >Visitante</option>
+  <option value="2" <? if($nivel==2){ echo "selected"; } ?>>Operador</option>
+  <option value="3" <? if($nivel==3){ echo "selected"; } ?>>Administrador</option>
+</select></td></tr>
+
+<tr><td colspan='3' align='center' width="400"><input type='submit' name='grabar' value='grabar'></td></tr>
+<tr><td colspan='3' align='center' width="400">
+<?
+  if($error==1)
+  {
+    echo "<center><b>Usuario Existente!!!</b></center>";
+  }
+?>
+</td></tr>
+</form> 
+</table>
+</td></tr></table>
+  
+  
+  
+  
+  
+  
+</div>
+</div>
+
+<? include("pie.php");
+
+function cabecera()
+{
+   echo "<tr bgcolor='#440707'>";
+   echo "<td><font color='#ffffff' size='2'><b>Id</td>";
+   echo "<td><font color='#ffffff' size='2'><b>Nombre/Apellidos</td>";
+   echo "<td><font color='#ffffff' size='2'><b>Opciones</td>";
+   echo "</tr>";
+   
+}
+
+?>

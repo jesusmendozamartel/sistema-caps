@@ -1,0 +1,52 @@
+<? include("cabecera.php"); 
+   include("funciones.php");
+   $idencuesta = $_REQUEST["idencuesta"];
+?>
+
+<div class="div1">
+<div class="contenido">
+  <br>
+   <b>CONFIGURACIONES GENERALES</b>
+   <br>
+  <? include("menu_proyectos.php")?>
+<div align="right"><b>CONFIGURACION DE PROYECTOS</b></div><hr>
+<font face="arial" size="2">[+] <a href="proyecto_op.php?op=nuevo">Agregar Proyecto</a></font><br>
+ <div class="scroll2">
+ <table width='100%'>
+ <tr bgcolor='#766508'>
+ <td width='30'><font size='2' color='#ffffff'><b>Id</td>
+ <td><font size='2' color='#ffffff'><b>Descripci&oacute;n</td>
+ <td><font size='2' color='#ffffff'><b>C&oacute;digo Antiguo</td>
+ <td><font size='2' color='#ffffff'><b>Operaciones</td>
+ </tr>
+ <?
+    
+    $conexion = conectar_base(); 
+    mysql_select_db ("sistemaatencion",$conexion);
+    $cadena ="select * from proyecto order by idproyecto asc";
+    $tabla = mysql_query($cadena, $conexion);
+    $i=1;
+    while ($registro = mysql_fetch_array($tabla))
+    {
+	 echo "<tr bgcolor='#ffffff'>";
+	 echo "<td align='center'><font face='arial' size='2'>$i</td>";
+	 echo "<td><font face='arial' size='2'>$registro[1]</td>";
+	 //echo "<td><font face='arial' size='2'>$registro[2]</td>";
+	 echo "<td> <font face='arial' size='2'>";
+	 echo "<a href='proyecto_op.php?&op=editar&idproyecto=$registro[0]'><img border='0' src='imagenes/editar.gif' height='15'>[Editar]</font></a> | ";
+	 echo "<a href='proyecto_actividades.php?&idproyecto=$registro[0]'><img border='0' src='imagenes/icono-proponer-actividad.gif' width='25'><font size='2' face='arial'>[Eventos]</font></a> | ";
+	 echo "<a href='proyecto_capacitaciones.php?&idproyecto=$registro[0]'><img border='0' src='imagenes/icono-proponer-actividad.gif' width='25'><font size='2' face='arial'>[Capacitaciones]</font></a>";
+	 
+	 echo "</td>";	 
+	 echo "</tr>";
+	 
+	 $i = $i +1;
+    }
+ 
+ ?>
+ </table>
+</div>
+</div>
+</div>
+
+<? include("pie.php") ?>

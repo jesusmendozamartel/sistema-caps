@@ -1,0 +1,80 @@
+<? include("cabecera.php"); 
+   include("funciones.php");
+   
+   $proyecto = retorna_cadena($_REQUEST["idproyecto"],"idproyecto",1,"proyecto");
+?>
+
+<head>
+<style>
+  td
+   {
+      font-family: arial;
+      font-size: 10px;
+      text-transform: uppercase;
+   }
+</style>
+</head>
+
+
+
+
+<div class="div1">
+<div class="contenido">
+  <br>
+   <b>CONFIGURACIONES GENERALES</b>
+   <br>
+  <? include("menu_proyectos.php")?>
+<div align="right"><b>ACTIVIDAD DEL PROYECTOS: <font size="3" color="RED"><?php echo $proyecto; ?></font></b></div>
+
+<font face="arial" size="2">[+] <a href="eventos_op.php?op=nuevo&idproyecto=<?php echo $_REQUEST["idproyecto"]; ?>">Agregar Evento</a></font><br>
+ <div class="scroll2">
+ <table width='100%'>
+ <tr bgcolor='#766508'>
+ <td width='30'><font size='2' color='#ffffff'><b>Id</td>
+ <td><font size='2' color='#ffffff'><b>Fecha</td>
+ <td><font size='2' color='#ffffff'><b>Actividad</td>
+ <td><font size='2' color='#ffffff'><b>Area</td>
+ <td><font size='2' color='#ffffff'><b>Responsable</td>
+ <td><font size='2' color='#ffffff'><b>Operaciones</td>
+ </tr>
+ <?
+    
+    $conexion = conectar_base(); 
+    mysql_select_db ("sistemaatencion",$conexion);
+    $cadena ="select * from eventos where idproyecto = $_REQUEST[idproyecto] order by idactividad asc";
+	
+    $tabla = mysql_query($cadena, $conexion);
+    $i=1;
+    while ($registro = mysql_fetch_array($tabla))
+    {
+	 echo "<tr bgcolor='#ffffff'>";
+	 echo "<td align='center'><font face='arial' size='2'>$i</td>";
+	 echo "<td><font face='arial' size='2'>$registro[1]</td>";
+	 $actividad = retorna_cadena($registro[14],"idactividad",1,"actividadproyecto");
+	 echo "<td><font face='arial' size='2'>$actividad</td>"; 
+	 $area = retorna_cadena($registro[2],"idarea",1,"area");
+	
+	 echo "<td><font face='arial' size='2'>$area</td>";
+	// echo $registro[14];
+	 
+	 $responsable = retorna_cadena($registro[4],"idresponsable",1,"responsable");
+	 $responsable2 = retorna_cadena($registro[4],"idresponsable",2,"responsable");
+	 echo "<td><font face='arial' size='2'>$responsable2/$responsable </td>"; //Responable
+	 $idproyecto = $_REQUEST['idproyecto'];
+	 $ruta = "proyecto_actividades.php?idproyecto=$idproyecto";
+	 echo "<td width='230'>";
+	 echo "<a href='eventos_op.php?op=editar?&idevento=$registro[0]&idproyecto=$_REQUEST[idproyecto]&ruta=$ruta'><img border='0' src='imagenes/editar.gif' height='15'><font size='2' face='arial'>[Editar]</font></a>";
+
+	 echo "</td>";	 
+	 echo "</tr>";
+	 
+	 $i = $i +1;
+    }
+ 
+ ?>
+ </table>
+</div>
+</div>
+</div>
+
+<? include("pie.php") ?>

@@ -1,0 +1,48 @@
+ws00
+COD_MA COD_LU VAR101 VAR102 VAR103 VAR104 VAR105 VAR193 VAR194 HC
+
+ws01
+Cod_01 rel_00 cod_lu var201 var202 var203 var204 var205 var206 var207 var208 var209 var210 var211 var212 var213 var214 var215 var216 var217 var218 var219 var220 var221 var222 var223 var224 var225 var226 var227 var228 var229 var230 var231 var232 var291 var292 var293 var294 var764 hc var234 var235 var236
+
+ws02
+COD_02 REL_01 REL_00 COD_LU HC
+
+ws03 
+cod_03 rel_01 rel_00 cod_lu var301 var302 var303 var304 var306 var307 var308 var309 var310 var311 var312 var313 var314 var315 var316 var317 var391 var392 var393 var394 hc var319 var320 var321 varproy varacti
+
+ws04
+cod_04 cod_lu var401 var401 var402 var403 var404 var405 var406 var407 var408 var409 var410 var411 var412 var413 var491 var492 var493 var494 varproy varacti
+
+ws05 
+cod_05 cod_lu var801 var802 803 804 805 806 807 808 891 892 893 894 
+
+ws06
+COD_06 REL_01 COD_LU VAR601
+
+ws07
+COD_07 REL_01 COD_LU CLASE TIPO FECHA DESCR RESP1 RESP2 RESP3 RUTA FLEC
+
+ws08
+ACCESO DESCRIP ESTADO USUARIO
+
+ws09
+e_codigo e_fecha e_desc e_resp1 e_resp2 e_resp3 e_resp4 e_lugar e_zonai e_proy e_tipo cod_lu varproy  varacti
+
+ws10
+p_codigo p_rele p_tipodoc p_doc p_nombre p_relws11 cod_lu
+
+ws11
+c_codigo c_tipodoc c_doc c_nombre c_edad c_sexo c_cargo c_profes c_dire c_telef c_fax c_email  c_orga c_instr cod_lu
+
+ws12
+cod_12  relws01  e_desc  e_fecha  e_proy  e_resp1  poavp_i  poavp_f  nombreo  rolcumpl  realad_i  realad_f  realad_c  partos_i  partos_f  sp_cimpu_i  sp_cimpu_f  sp_cviol_i  sp_cviol_f  sp_cdisr_i  sp_cdisr_f  sp_cabsu_i  sp_cabsu_f  sp_hansi_i  sp_hansi_f  sp_hataq_i  sp_hataq_f  sp_htemo_i  sp_htemo_f  sp_htris_i  sp_htris_f  sp_hauto_i  sp_hauto_f  sp_hafec_i  sp_hafec_f  sp_heufo_i  sp_hinso_i  `sp_heufo_f  sp_hinso_f  sp_hpesa_i  sp_hpesa_f  sp_hhipe_i  sp_hhipe_f  sp_haped_i  sp_haped_f  sp_hapee_i  sp_hapee_f  sp_hlibd_i  sp_hlibd_f  sp_hliba_i  sp_hliba_f  sp_hafei_i  sp_hafei_f  sp_hsenv_i  sp_hsenv_f  sp_psusp_i  sp_psusp_f  sp_phipe_i  sp_phipe_f  sp_pdesc_i  sp_pdesc_f  sp_pdesp_i  sp_pdesp_f  sp_pdesd_i  sp_pdesd_f  sp_psint_i  sp_psint_f  sp_pepia_i  sp_pepia_f  sp_pflas_i  sp_pflas_f  sp_pdese_i  sp_pdese_f  sp_pobse_i  sp_pobse_f  sp_smemo_i  sp_smemo_f  sp_saten_i  sp_saten_f  sp_sorie_i  sp_sorie_f  sp_sconc_i  sp_sconc_f  sp_salte_i  sp_salte_f  funcfami_i  funcfami_f  funcsoci_i  funcsoci_f  pv_traba_i  pv_traba_f  pv_trabt_i  pv_estud_i  pv_estud_f  pv_otros_i  pv_otros_f  conci_dc_i  conci_dc_f  ucread  umodif  fcread  fmodif  cod_lu  otro  otro_i  otro_f`
+
+ws13presup
+COD_13  COD_LU  CPROY  COBJE  CACTI  MONTO  EJECU  FCREA`
+
+wp14proy 
+COD_14 COD_LU CPROY DPROY FCREA
+
+ws17acti
+`COD_17``COD_LU``CACTI``DACTI``FCREA`
+
